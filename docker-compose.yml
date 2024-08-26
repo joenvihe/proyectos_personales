@@ -1,0 +1,31 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./web:/usr/share/nginx/html/web
+      - /etc/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - proyectoA
+      - proyectoB
+
+  proyectoA:
+    image: nginx:latest
+    container_name: proyectoA
+    volumes:
+      - ./proyectoA:/usr/share/nginx/html
+    ports:
+      - "8081:80"
+
+  proyectoB:
+    image: nginx:latest
+    container_name: proyectoB
+    volumes:
+      - ./proyectoB:/usr/share/nginx/html
+    ports:
+      - "8082:80"
