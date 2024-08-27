@@ -12,8 +12,11 @@ services:
       - ./certs/fullchain.pem:/etc/ssl/certs/fullchain.pem
       - ./certs/privkey.pem:/etc/ssl/private/privkey.pem
       - ./app_enriquevicenteh:/usr/share/nginx/html
+    #depends_on:
+    #  - chatdocument_app
     depends_on:
-      - chatdocument_app
+      chatdocument_app:
+        condition: service_healthy
 
   chatdocument_app:
     build:
@@ -22,3 +25,8 @@ services:
     container_name: chatdocument_app
     ports:
       - "8501:8501"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8501/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
