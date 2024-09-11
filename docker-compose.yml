@@ -14,9 +14,6 @@ services:
       - ./app_enriquevicenteh:/usr/share/nginx/html
     depends_on:
       - chatdocument_app
-    #depends_on:
-    #  chatdocument_app:
-    #    condition: service_healthy
 
   chatdocument_app:
     build:
@@ -25,8 +22,20 @@ services:
     container_name: chatdocument_app
     ports:
       - "8501:8501"
-#    healthcheck:
-#      test: ["CMD-SHELL", "curl -f http://172.26.0.2:8501/ || exit 1"]
-#      interval: 30s
-#      timeout: 10s
-#      retries: 5
+
+  wordpress:
+    build:
+      context: ./wordpress_app
+    container_name: wordpress_app
+    ports:
+      - "8080:80"
+    environment:
+      - DB_NAME=${WORDPRESS_DB_NAME}
+      - DB_USER=${WORDPRESS_DB_USER}
+      - DB_PASSWORD=${WORDPRESS_DB_PASSWORD}
+      - DB_HOST=${WORDPRESS_DB_HOST}
+    volumes:
+      - ./wordpress/wp-content:/var/www/html/wp-content
+
+volumes:
+  db_data: {}
