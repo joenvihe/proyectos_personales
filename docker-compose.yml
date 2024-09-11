@@ -8,10 +8,16 @@ services:
       - "80:80"
       - "443:443"
     volumes:
+      #- ./nginx.conf:/etc/nginx/conf.d/default.conf
+      #- ./certs/fullchain.pem:/etc/ssl/certs/fullchain.pem
+      #- ./certs/privkey.pem:/etc/ssl/private/privkey.pem
+      #- ./app_enriquevicenteh:/usr/share/nginx/html
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./certs/fullchain.pem:/etc/ssl/certs/fullchain.pem
-      - ./certs/privkey.pem:/etc/ssl/private/privkey.pem
-      - ./app_enriquevicenteh:/usr/share/nginx/html
+      - ./certs/enrique.vicenteh.com/fullchain.pem:/etc/ssl/certs/enrique.vicenteh.com.pem
+      - ./certs/enrique.vicenteh.com/privkey.pem:/etc/ssl/private/enrique.vicenteh.com.pem
+      - ./certs/vivelunahuana.com/fullchain.pem:/etc/ssl/certs/vivelunahuana.com.pem
+      - ./certs/vivelunahuana.com/privkey.pem:/etc/ssl/private/vivelunahuana.com.pem
+      - ./app_enriquevicenteh:/usr/share/nginx/html      
     depends_on:
       - chatdocument_app
 
