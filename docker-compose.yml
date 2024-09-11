@@ -20,6 +20,7 @@ services:
       - ./app_enriquevicenteh:/usr/share/nginx/html      
     depends_on:
       - chatdocument_app
+      - wordpress
 
   chatdocument_app:
     build:
